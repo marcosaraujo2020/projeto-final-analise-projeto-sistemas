@@ -1,0 +1,80 @@
+@model Models.Item
+
+@{
+    ViewData["Title"] = "Cadastrar";
+   
+    bool alteracao = Context.Request.Query.ContainsKey("prod");
+    if (alteracao)
+        ViewBag.Subtitulo = $"Alteração de Item na Nota nº {Model.NotaDeVendaId:D4}";
+        
+    else
+        ViewBag.Subtitulo = $"Cadastro de Item na Nota nº{Model.NotaDeVendaId:D4}";
+         
+    
+}
+
+<h1>@ViewBag.Subtitulo</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+ @*            <div class="form-group">
+                <label asp-for="NotaDeVendaId" class="control-label"></label>
+                <select asp-for="NotaDeVendaId" class ="form-control" asp-items="ViewBag.NotaDeVendaId"></select>
+            </div>
+*@        
+
+    <input type="hidden" asp-for="@Model.NotaDeVendaId">
+    <input type="hidden" asp-for="@Model.Preco">
+    @if (alteracao)
+    {
+        <input type="hidden" asp-for="@Model.ProdutoId">
+    }
+
+            <div class="form-group">
+                <label asp-for="@Model.ProdutoId" class="control-label">Produto:</label>
+                <select asp-for="@Model.ProdutoId" class ="form-control" asp-items="@(IEnumerable<SelectListItem>)ViewBag.Produtos" disabled="@alteracao" autofocus="@(!alteracao)"></select>
+                <span asp-validation-for="@Model.ProdutoId" class="text-danger"></span>
+            </div> 
+ 
+            @* 
+            <div class="form-group">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Percentual" class="control-label"></label>
+                <input asp-for="Percentual" class="form-control" />
+                <span asp-validation-for="Percentual" class="text-danger"></span>
+            </div> 
+             *@
+
+
+            <div class="form-group mb-2">
+                <label asp-for="Quantidade" class="control-label"></label>
+                <input asp-for="Quantidade" class="form-control" autofocus="@alteracao"/>
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @*<input type="submit" value="Salvar" class="btn btn-primary" />*@
+
+                <a asp-action="Index" asp-route-ped="@Model.NotaDeVendaId" class="btn btn-outline-secondary">Cancelar</a>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@* <div>
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

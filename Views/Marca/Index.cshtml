@@ -1,0 +1,41 @@
+@model IEnumerable<Models.Marca>
+
+@{
+    ViewData["Title"] = "Marcas";
+}
+
+<h1>Laboratórios</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Cadastrar</a>
+</p>
+<table class="table tabela-marcas">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Decricao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Decricao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MarcaId" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.MarcaId" class="btn btn-success">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.MarcaId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

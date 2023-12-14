@@ -1,0 +1,78 @@
+@model IEnumerable<Models.NotaDeVenda>
+
+@{
+    ViewData["Title"] = "Vendas";
+    var cliente = ViewBag.Cliente;
+    ViewBag.Subtitulo = $"Cliente: <b>{cliente.Nome}</b>";
+}
+
+<h1>Nota de Venda</h1>
+<p>
+    <a asp-action="Create" asp-route-cid="@cliente.ClienteId" class="btn btn-outline-primary">Novo cupom</a>
+</p>
+
+
+<h5>@Html.Raw(ViewBag.Subtitulo)</h5>
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaDeVendaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Pagamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transportadora)
+            </th> 
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.NotaDeVendaId.ToString("D4")
+            </td>
+            <td>             
+                @item.Data
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+       
+            <td>
+                @Html.DisplayFor(modelItem => item.Pagamento.Pago)             
+            </td>
+            <td>      
+                 @Html.DisplayFor(modelItem => item.Transportadora.Nome)
+            </td> 
+            <td>
+                <a asp-action="Index" asp-controller="Item" asp-route-ped="@item.NotaDeVendaId" class="btn btn-success">Ver itens</a>
+
+                <a asp-action="Delete" asp-route-id="@item.NotaDeVendaId" class="btn btn-danger">Excluir</a>
+                <a asp-action="Index" asp-controller="Cliente" class="btn btn-secondary">Voltar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+    </table>
+
+}
+
+
+else
+{
+    <p>Não existe cupom de vendas para este cliente.</p>
+     <a asp-action="Index" asp-controller="Cliente" class="btn btn-secondary">Voltar</a>
+}

@@ -1,0 +1,19 @@
+.tabela-clientes tr > th:last-child,
+.tabela-clientes tr > td:last-child,
+
+.tabela-marcas tr > th:last-child,
+.tabela-marcas tr > td:last-child,
+
+.tabela-produtos tr > th:last-child,
+.tabela-produtos tr > td:last-child,
+
+.tabela-transportadora tr > th:last-child,
+.tabela-transportadora tr > td:last-child,
+
+.tabela-vendedores tr > th:last-child,
+.tabela-vendedores tr > td:last-child
+{
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+}
